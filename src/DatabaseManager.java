@@ -18,17 +18,37 @@ public class DatabaseManager {
         }
     }
     public static boolean login(String login, String password) throws SQLException{
-        try {
-            Connection connection=DriverManager.getConnection(url,username,passwords);
+        try (Connection connection=DriverManager.getConnection(url,username,passwords)){
             String sql = "SELECT * FROM users WHERE login=? AND password=?;";
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,login);
             preparedStatement.setString(2,password);
             ResultSet resultSet=preparedStatement.executeQuery();
             return resultSet.next();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
+
+    public static void addBook(String name,String author,String ISBN) throws SQLException{
+        try (Connection connection=DriverManager.getConnection(url,username,passwords)){
+            String sql="INSERT INTO \"books\" (book_name,book_author,book_isbn) VALUES(?,?,?)";
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,name);
+            preparedStatement.setString(2,author);
+            preparedStatement.setString(3,ISBN);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    public static void deleteBook(String ISBN) throws SQLException{
+        try(Connection connection=DriverManager.getConnection(url,username,passwords)){
+            String sql="DELETE FROM books WHERE book_isbn =?";
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,ISBN);
+            preparedStatement.executeUpdate();
+
+        }
+    }
+
+
 
 }
