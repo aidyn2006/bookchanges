@@ -49,7 +49,6 @@ public class UserRegistrationService extends User{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 }

@@ -32,6 +32,19 @@ public class Exchange extends Book {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void findbook() throws SQLException {
+        System.out.println("Enter the name of book: ");
+        String bookname=scanner.nextLine();
+        System.out.println("Enter the authors name: ");
+        String bookauthor= scanner.nextLine();
+        DatabaseManager.findBook(bookname,bookauthor);
 
     }
+    public void displaymybooks(){
+
+    }
+
+
 }
